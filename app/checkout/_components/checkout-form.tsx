@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import PaymentMethods from './payment-methods';
 
 const CheckoutForm = ({ cart }: { cart?: any }) => {
   const [formData, setFormData] = useState({
@@ -33,7 +34,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full p-4 rounded-md">
+    <form onSubmit={handleSubmit} className="w-full p-4 rounded-md pb-8">
       <div className="my-4 flex flex-col gap-2">
         <label className="block text-2xl font-semibold text-gray-900">Contact</label>
         <input
@@ -63,7 +64,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
           <select
             className="px-4 mt-1 block h-12 w-full bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
-            <option value="India" className='px-4'>India</option>
+            <option value="India" className='px-4'>United States</option>
           </select>
         </div>
         <div className="grid grid-cols-2 gap-4 mb-4">
@@ -109,7 +110,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
             onChange={handleChange}
             className="px-4 mt-1 block h-12 w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
-          <div>
+          <div className='flex items-center gap-4'>
             <label className="block text-sm font-medium text-gray-700">State</label>
             <select
               name="state"
@@ -117,7 +118,9 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
               onChange={handleChange}
               className="mt-1 block h-12 w-full bg-white border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             >
-              <option value="Punjab">Punjab</option>
+              <option value="Punjab">California</option>
+              <option value="Punjab">Michigan</option>
+              <option value="Punjab">Illinois</option>
               {/* Add other states here */}
             </select>
           </div>
@@ -142,8 +145,8 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
         </div>
       </div>
 
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700">Shipping method</label>
+      <div className="mb-4 flex flex-col gap-4">
+        <label className="block text-lg font-medium text-gray-700">Shipping method</label>
         <input
           type="text"
           placeholder="Enter your shipping address to view available shipping methods."
@@ -152,16 +155,17 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
         />
       </div>
 
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700">Payment</label>
-        <p className="text-sm text-gray-600">All transactions are secure and encrypted.</p>
+      <div className="mb-4 flex flex-col gap-4">
+        <label className="block text-2xl font-bold text-gray-700">Payment</label>
+        <p className="text-sm font-light text-gray-500">All transactions are secure and encrypted.</p>
+        <PaymentMethods />
       </div>
 
       <button
         type="submit"
-        className="w-full h-12 bg-blue-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        className="w-full rounded-md bg-black py-2 font-semibold text-white"
       >
-        Submit
+        Pay Now
       </button>
     </form>
   );
