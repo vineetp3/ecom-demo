@@ -1,8 +1,9 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ cart }: { cart?: any }) => {
   const [formData, setFormData] = useState({
     emailOrPhone: '',
     emailOffers: true,
@@ -15,7 +16,7 @@ const CheckoutForm = () => {
     pinCode: '',
     saveInfo: false,
   });
-
+  const router = useRouter();
   const handleChange = (e : any) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -24,10 +25,11 @@ const CheckoutForm = () => {
     });
   };
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
+    router.push(`${process.env.NEXT_PUBLIC_PAYMENT_REDIRECT}cart=${JSON.stringify(cart)}`)
     // Handle form submission
-    console.log(formData);
+    // console.log(formData);
   };
 
   return (
