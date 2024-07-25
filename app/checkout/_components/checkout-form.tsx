@@ -31,7 +31,7 @@ const CheckoutForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full p-4 rounded-md overflow-scroll">
+    <form onSubmit={handleSubmit} className="w-full p-4 rounded-md">
       <div className="my-4 flex flex-col gap-2">
         <label className="block text-2xl font-semibold text-gray-900">Contact</label>
         <input

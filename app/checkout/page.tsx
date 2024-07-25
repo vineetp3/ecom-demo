@@ -4,7 +4,7 @@ import { getCart } from 'lib/shopify';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import CheckoutForm from './_components/checkout-form';
-
+import styles from './styles.module.css';
 const Checkout = async () => {
   const cartId = cookies().get('cartId')?.value;
   let cart;
@@ -14,12 +14,16 @@ const Checkout = async () => {
   }
   return (
     <div className="flex h-full px-[10%]">
-      <div className="basis-1/2 border-r-[1px] dark:border-neutral-500">
+      <div
+        className={`h-[calc(100vh-7rem)] basis-1/2 overflow-scroll dark:border-neutral-500 ${styles.noScrollbar}`}
+      >
         <CheckoutForm />
       </div>
-      <div className="basis-1/2 bg-neutral-100 dark:bg-neutral-800 md:p-16">
+      <div className="basis-1/2 bg-neutral-100 md:p-16 dark:bg-neutral-800">
         {!cart || cart.lines.length === 0 ? (
-          <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
+          <div
+            className={`mt-20 flex w-full flex-col items-center justify-center overflow-hidden `}
+          >
             <ShoppingCartIcon className="h-16" />
             <p className="mt-6 text-center text-2xl font-bold">Your cart is empty.</p>
           </div>
@@ -34,7 +38,7 @@ const Checkout = async () => {
                   <div className="relative flex items-center gap-4 py-4">
                     <div className="relative">
                       <Image
-                        className="rounded-xl max-h-[70px] border-2 border-neutral-200 dark:border-neutral-500 object-cover"
+                        className="max-h-[70px] rounded-xl border-2 border-neutral-200 object-cover dark:border-neutral-500"
                         width={80}
                         height={70}
                         alt={
