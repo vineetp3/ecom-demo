@@ -16,13 +16,11 @@ function ThreeItemGridItem({
 }) {
   return (
     <div className={className}>
-      <Link className="relative block aspect-square h-full w-full" href={`/product/${item.handle}`}>
+      <Link className="relative aspect-square h-full w-full flex flex-wrap" href={`/product/${item.handle}`}>
         <GridTileImage
           src={item.featuredImage.url}
           fill
-          sizes={
-            size === 'full' ? '(min-width: 768px) 66vw, 100vw' : '(min-width: 768px) 33vw, 100vw'
-          }
+          sizes={size === 'full' ? '(min-width: 768px) 100vw' : '(min-width: 768px) 100vw'}
           priority={priority}
           alt={item.title}
           label={{
@@ -42,16 +40,16 @@ export async function ThreeItemGrid() {
   const homepageItems = await getCollectionProducts({
     collection: 'hero-chocolates'
   });
-  console.log(homepageItems.length);
 
   if (!homepageItems[0] || !homepageItems[1] || !homepageItems[2]) return null;
 
   const [firstProduct, secondProduct, thirdProduct] = homepageItems;
 
   return (
-    <section className="mx-auto max-w-screen-2xl px-4 pb-4 mt-4">
-      <h2 className="mb-4 text-xl font-bold">Bestsellers</h2>
-        <div className=" grid max-h-[700px] gap-4 md:grid-cols-6 md:grid-rows-2">
+    <section className="mt-4  w-full px-[10%] pb-4 ">
+      <div className="flex size-full max-w-screen-2xl flex-col justify-center">
+        <h2 className="mb-4 text-xl font-bold">Bestsellers</h2>
+        <div className="grid max-h-[500px] gap-4 md:grid-cols-6 md:grid-rows-2">
           <ThreeItemGridItem
             size="full"
             item={thirdProduct}
@@ -69,6 +67,7 @@ export async function ThreeItemGrid() {
             className="md:col-span-2 md:row-span-1"
           />
         </div>
+      </div>
     </section>
   );
 }
