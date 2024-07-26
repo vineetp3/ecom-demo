@@ -1,5 +1,6 @@
 import { getCart } from "lib/shopify";
 import { cookies } from "next/headers";
+import OrderComplete from "./order-complete";
 
 export default async function OrderSummary() {
     const cartId = cookies().get('cartId')?.value;
@@ -47,6 +48,7 @@ export default async function OrderSummary() {
         </div>
       </div>
       <div className="text-gray-500 text-sm mt-2">{`Including $${cart?.cost.totalTaxAmount.amount} in taxes`}</div>
+      <OrderComplete />
     </div>
   );
 }

@@ -1,8 +1,9 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
-import PaymentMethods from './payment-methods';
+import CheckoutComplete from './_components/checkout-complete';
+import PaymentMethods from './_components/payment-methods';
 
 const CheckoutForm = ({ cart }: { cart?: any }) => {
   const [formData, setFormData] = useState({
@@ -18,6 +19,8 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
     saveInfo: false,
   });
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const offer = searchParams.get('offer');
   const handleChange = (e : any) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -29,9 +32,12 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     router.push(`${process.env.NEXT_PUBLIC_PAYMENT_REDIRECT}cart=${JSON.stringify(cart)}`)
-    // Handle form submission
-    // console.log(formData);
   };
+
+  if(offer){
+    return <CheckoutComplete />
+  }
+
 
   return (
     <form onSubmit={handleSubmit} className="w-full p-4 rounded-md pb-8">

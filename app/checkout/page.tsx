@@ -1,8 +1,8 @@
 import { getCart } from 'lib/shopify';
 import { Sora } from 'next/font/google';
 import { cookies } from 'next/headers';
-import CheckoutCart from './_components/checkout-cart';
-import CheckoutForm from './_components/checkout-form';
+import CheckoutCart from './_components/checkout-cart/checkout-cart';
+import CheckoutForm from './_components/checkout-form/checkout-form';
 import styles from './styles.module.css';
 
 const soraFont = Sora({subsets : ['latin']})

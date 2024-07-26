@@ -5,20 +5,13 @@ import Image from 'next/image';
 import HeroImage from 'public/image-hero.png';
 
 export const metadata = {
-  description: 'High-performance ecommerce store built with Next.js, Vercel, and Shopify.',
+  description: 'The best chocolates for gifting.',
   openGraph: {
     type: 'website'
   }
 };
 
 export default async function HomePage() {
-  // return (
-  //   <>
-  //     <ThreeItemGrid />
-  //     <Carousel />
-  //     <Footer />
-  //   </>
-  // );
   return (
     <div className="flex flex-col gap-4">
       <div className="relative flex items-center justify-center bg-[#E792A1]">
