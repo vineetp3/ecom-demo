@@ -3,7 +3,7 @@ import { DeleteItemButton } from 'components/cart/delete-item-button';
 import { getCart } from 'lib/shopify';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
-import OrderSummary from './order-summary';
+import OrderSummary from './_components/order-summary';
 
 export default async function CheckoutCart() {
   const cartId = cookies().get('cartId')?.value;
@@ -55,7 +55,6 @@ export default async function CheckoutCart() {
           })}
         </ul>
       )}
-
       <OrderSummary />
     </div>
   );
