@@ -4,7 +4,14 @@ import Link from 'next/link';
 
 const font = Inter({ subsets: ['latin'] });
 
-export default function CheckoutComplete() {
+export default function CheckoutComplete({ offer, cart }: { offer: any; cart?: any }) {
+  const parsedOffer = JSON.parse(offer) || '';
+  const { discountAbsolute, discountPercentage } = parsedOffer?.offerDetails || {};
+  const cartAmount = Number(cart.cost.totalAmount.amount) || 50;
+  const amountToPay = discountAbsolute
+    ? cartAmount - discountAbsolute
+    : cartAmount - (discountPercentage / 100) * cartAmount;
+  console.log(discountAbsolute, discountPercentage);
   return (
     <div
       className={` min-h-screen w-full items-center justify-center bg-white px-4 pt-16 ${font.className}`}
@@ -42,29 +49,30 @@ export default function CheckoutComplete() {
           <h3 className="mb-2 px-4 text-lg font-semibold">Order details</h3>
           <div className="grid grid-flow-row-dense grid-cols-2 justify-between gap-y-6 px-4">
             <div className="flex flex-col gap-1 text-sm">
-              <span className="text-gray-500 font-light">Contact information:</span>
+              <span className="font-light text-gray-500">Contact information:</span>
               <span>taylor.chen@domain.com</span>
             </div>
             <div className="flex flex-col gap-1 text-sm">
-              <span className="text-gray-500 font-light">Payment method:</span>
+              <span className="font-light text-gray-500">Payment method:</span>
               <span className="inline-flex items-center gap-2">
                 <Image src="/visa.png" height={20} width={35} alt="visa-icon" />
-                Visa •••• 1234 - $74.00</span>
+                Visa •••• 1234 - ${amountToPay}
+              </span>
             </div>
             <div className="flex flex-col gap-1 text-sm">
-              <span className="text-gray-500 font-light">Shipping address:</span>
+              <span className="font-light text-gray-500">Shipping address:</span>
               <span>Taylor Chen,</span>
               <span>151 OConnor St,</span>
               <span>Dallas, TX, K2P 2L8, USA</span>
             </div>
             <div className="flex flex-col gap-1 text-sm">
-              <span className="text-gray-500 font-light">Billing address:</span>
+              <span className="font-light text-gray-500">Billing address:</span>
               <span>Taylor Chen,</span>
               <span>151 OConnor St,</span>
               <span>Dallas, TX, K2P 2L8, USA</span>
             </div>
             <div className="flex flex-col gap-1 text-sm">
-              <span className="text-gray-500 font-light">Shipping method:</span> FedEx Ground
+              <span className="font-light text-gray-500">Shipping method:</span> FedEx Ground
             </div>
           </div>
 
@@ -78,7 +86,7 @@ export default function CheckoutComplete() {
           </div>
         </div>
 
-        <div className="mt-6 flex w-full justify-between items-center">
+        <div className="mt-6 flex w-full items-center justify-between">
           <Link href="#" className="text-sm text-blue-500">
             Need help? Contact us
           </Link>
