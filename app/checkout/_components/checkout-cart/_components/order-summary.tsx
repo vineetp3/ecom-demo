@@ -9,7 +9,6 @@ export default async function OrderSummary() {
   if (cartId) {
     cart = await getCart(cartId);
   }
-  console.log(cart)
   return (
     <div className="mt-2 w-full">
       <div className="space-y-1 text-sm px-4 md:p-0">

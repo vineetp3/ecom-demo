@@ -11,7 +11,6 @@ export default function CheckoutComplete({ offer, cart }: { offer: any; cart?: a
   const amountToPay = discountAbsolute
     ? cartAmount - discountAbsolute
     : cartAmount - (discountPercentage / 100) * cartAmount;
-  console.log(discountAbsolute, discountPercentage);
   return (
     <div 
       className={` md:min-h-screen w-full items-center justify-center bg-white md:px-4 py-4 md:py-16 ${font.className}`}
