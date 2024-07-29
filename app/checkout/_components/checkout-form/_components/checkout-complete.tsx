@@ -21,7 +21,7 @@ export default function CheckoutComplete({ offer, cart }: { offer: any; cart?: a
             <Image src="/checkmark-circle.png" height={50} width={50} alt="checkmark" />
             <div className="flex flex-col justify-start">
               <p className="text-left text-sm text-gray-600">Confirmation #DQFDHG5E0</p>
-              <h2 className="text-2xl font-semibold">Thank you for your order!</h2>
+              <h2 className="text-2xl font-semibold text-left">Thank you for your order!</h2>
             </div>
           </div>
           <div className="w-full">
@@ -47,13 +47,13 @@ export default function CheckoutComplete({ offer, cart }: { offer: any; cart?: a
         <div className="flex w-full flex-col gap-3 rounded-md border border-gray-200 pt-4">
           <h3 className="mb-2 px-4 text-lg font-semibold">Order details</h3>
           <div className="grid grid-flow-row-dense grid-cols-2 justify-between gap-y-6 px-4">
-            <div className="flex flex-col gap-1 text-sm">
+            <div className="flex flex-col gap-1 text-sm  break-words">
               <span className="font-light text-gray-500">Contact information:</span>
               <span>taylor.chen@domain.com</span>
             </div>
             <div className="flex flex-col gap-1 text-sm">
               <span className="font-light text-gray-500">Payment method:</span>
-              <span className="inline-flex items-center gap-2">
+              <span className="flex flex-wrap items-center gap-2">
                 <Image src="/visa.png" height={20} width={35} alt="visa-icon" />
                 Visa •••• 1234 - ${amountToPay}
               </span>
