@@ -46,10 +46,10 @@ export async function ThreeItemGrid() {
   const [firstProduct, secondProduct, thirdProduct] = homepageItems;
 
   return (
-    <section className="mt-4  w-full px-[10%] pb-4 ">
+    <section className="mt-4 h-full w-full px-4 md:px-[10%] pb-4 ">
       <div className="flex size-full max-w-screen-2xl flex-col justify-center">
         <h2 className="mb-4 text-xl font-bold">Bestsellers</h2>
-        <div className="grid max-h-[500px] gap-4 md:grid-cols-6 md:grid-rows-2">
+        <div className="grid gap-4 md:grid-cols-6 md:grid-rows-2">
           <ThreeItemGridItem
             size="full"
             item={thirdProduct}

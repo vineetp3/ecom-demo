@@ -1,3 +1,5 @@
+'use client';
+
 import { Inter } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,14 +8,26 @@ const font = Inter({ subsets: ['latin'] });
 
 export default function CheckoutComplete({ offer, cart }: { offer: any; cart?: any }) {
   const parsedOffer = JSON.parse(offer) || '';
+  const userData = parsedOffer['userData'];
+  userData.emailOrPhone = userData.emailOrPhone || 'defaultEmail@person3.io';
+  userData.emailOffers = userData.emailOffers !== undefined ? userData.emailOffers : true;
+  userData.firstName = userData.firstName || 'John';
+  userData.lastName = userData.lastName || 'Doe';
+  userData.address = userData.address || '123 Default St.';
+  userData.apartment = userData.apartment || 'Apt 1';
+  userData.city = userData.city || 'Default City';
+  userData.state = userData.state || 'Default State';
+  userData.zipCode = userData.zipCode || '00000';
+  userData.saveInfo = userData.saveInfo !== undefined ? userData.saveInfo : false;
+
   const { discountAbsolute, discountPercentage } = parsedOffer?.offerDetails || {};
   const cartAmount = Number(cart.cost.totalAmount.amount) || 50;
   const amountToPay = discountAbsolute
     ? cartAmount - discountAbsolute
     : cartAmount - (discountPercentage / 100) * cartAmount;
   return (
-    <div 
-      className={` md:min-h-screen w-full items-center justify-center bg-white md:px-4 py-4 md:py-16 ${font.className}`}
+    <div
+      className={` w-full items-center justify-center bg-white py-4 md:min-h-screen md:px-4 md:py-16 ${font.className}`}
     >
       <div className="rounded-lg  flex size-full flex-col bg-white px-2 md:px-8">
         <div className="mb-6 flex flex-col items-start gap-6 text-center">
@@ -21,7 +35,7 @@ export default function CheckoutComplete({ offer, cart }: { offer: any; cart?: a
             <Image src="/checkmark-circle.png" height={50} width={50} alt="checkmark" />
             <div className="flex flex-col justify-start">
               <p className="text-left text-sm text-gray-600">Confirmation #DQFDHG5E0</p>
-              <h2 className="text-2xl font-semibold text-left">Thank you for your order!</h2>
+              <h2 className="text-left text-2xl font-semibold">Thank you for your order!</h2>
             </div>
           </div>
           <div className="w-full">
@@ -37,7 +51,12 @@ export default function CheckoutComplete({ offer, cart }: { offer: any; cart?: a
             </div>
             <div className="w-full rounded-b-md border bg-gray-100  py-4">
               <label className="flex items-center justify-start px-4">
-                <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-600" />
+                <input
+                  type="checkbox"
+                  className="form-checkbox h-4 w-4 text-blue-600"
+                  checked={userData.emailOffers}
+                  disabled
+                />
                 <span className="ml-2 text-sm text-gray-600">Email me with news and offers</span>
               </label>
             </div>
@@ -47,9 +66,9 @@ export default function CheckoutComplete({ offer, cart }: { offer: any; cart?: a
         <div className="flex w-full flex-col gap-3 rounded-md border border-gray-200 pt-4">
           <h3 className="mb-2 px-4 text-lg font-semibold">Order details</h3>
           <div className="grid grid-flow-row-dense grid-cols-2 justify-between gap-y-6 px-4">
-            <div className="flex flex-col gap-1 text-sm  break-words">
+            <div className="flex flex-col gap-1 break-words  text-sm">
               <span className="font-light text-gray-500">Contact information:</span>
-              <span>taylor.chen@domain.com</span>
+              <span>{userData.emailOrPhone || 'taylor.chen@domain.com'}</span>
             </div>
             <div className="flex flex-col gap-1 text-sm">
               <span className="font-light text-gray-500">Payment method:</span>
@@ -60,15 +79,15 @@ export default function CheckoutComplete({ offer, cart }: { offer: any; cart?: a
             </div>
             <div className="flex flex-col gap-1 text-sm">
               <span className="font-light text-gray-500">Shipping address:</span>
-              <span>Taylor Chen,</span>
-              <span>151 OConnor St,</span>
-              <span>Dallas, TX, K2P 2L8, USA</span>
+              <span>{`${userData.firstName} ${userData.lastName}`}</span>
+              <span>{`${userData.address}`}</span>
+              <span>{`${userData.city} ${userData.state}, ${userData.zipCode}`}</span>
             </div>
             <div className="flex flex-col gap-1 text-sm">
               <span className="font-light text-gray-500">Billing address:</span>
-              <span>Taylor Chen,</span>
-              <span>151 OConnor St,</span>
-              <span>Dallas, TX, K2P 2L8, USA</span>
+              <span>{`${userData.firstName} ${userData.lastName}`}</span>
+              <span>{`${userData.address}`}</span>
+              <span>{`${userData.city} ${userData.state}, ${userData.zipCode}`}</span>
             </div>
             <div className="flex flex-col gap-1 text-sm">
               <span className="font-light text-gray-500">Shipping method:</span> FedEx Ground
@@ -77,7 +96,7 @@ export default function CheckoutComplete({ offer, cart }: { offer: any; cart?: a
 
           <div className="w-full rounded-b-md border bg-gray-100  py-4">
             <label className="flex items-center justify-start px-4">
-              <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-600" />
+              <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-600" disabled />
               <span className="ml-2 text-sm text-gray-600">
                 Save my information for a faster checkout
               </span>
