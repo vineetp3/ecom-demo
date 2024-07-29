@@ -24,7 +24,7 @@ export default async function HomePage() {
               Sweetened with dates | No refinded Sugar
             </h2>
           </div>
-          <Image src={HeroImage} alt="hero-image" className="h-full w-full object-contain " />
+          <Image src={HeroImage} alt="hero-image" className="h-full w-full object-cover sm:object-contain " />
         </div>
       </div>
       <ProductGrid />

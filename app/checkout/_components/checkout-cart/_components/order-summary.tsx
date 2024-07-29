@@ -1,24 +1,25 @@
-import { getCart } from "lib/shopify";
-import { cookies } from "next/headers";
-import OrderComplete from "./order-complete";
+import { getCart } from 'lib/shopify';
+import { cookies } from 'next/headers';
+import OrderComplete from './order-complete';
 
 export default async function OrderSummary() {
-    const cartId = cookies().get('cartId')?.value;
-    let cart;
-  
-    if (cartId) {
-      cart = await getCart(cartId);
-    }
+  const cartId = cookies().get('cartId')?.value;
+  let cart;
+
+  if (cartId) {
+    cart = await getCart(cartId);
+  }
+  console.log(cart)
   return (
     <div className="mt-2 w-full">
-      <div className="space-y-1 text-sm">
+      <div className="space-y-1 text-sm px-4 md:p-0">
         <div className="flex justify-between">
           <span className="text-gray-600">Subtotal</span>
-          <span className="font-medium">{`$${cart?.cost.subtotalAmount.amount}`}</span>
+          <span className="font-medium">{`$${cart?.cost.subtotalAmount.amount}0`}</span>
         </div>
         <div className="flex items-center justify-between">
           <span className="text-gray-600">Shipping</span>
-          <span className="text-sm font-light text-gray-500">Enter shipping address</span>
+          <span className="text-sm font-light text-gray-500">Free Shipping</span>
         </div>
         <div className="flex justify-between">
           <span className="flex items-center text-gray-600">
@@ -38,16 +39,16 @@ export default async function OrderSummary() {
               />
             </svg>
           </span>
-          <span className="font-medium">{`$${cart?.cost.totalTaxAmount.amount}`}</span>
+          <span className="font-medium">{`$${cart?.cost.totalTaxAmount.amount}0`}</span>
         </div>
       </div>
-      <div className="mt-4 border-t border-gray-200 pt-2">
+      <div className="mt-4 border-t border-gray-200 pt-2 px-4 md:p-0">
         <div className="flex items-center justify-between">
           <span className="font-semibold">Total</span>
-          <span className="font-medium">{`$${cart?.cost.totalAmount.amount}`}</span>
+          <span className="font-medium">{`$${cart?.cost.totalAmount.amount}0`}</span>
         </div>
       </div>
-      <div className="text-gray-500 text-sm mt-2">{`Including $${cart?.cost.totalTaxAmount.amount} in taxes`}</div>
+      <div className="mt-2 text-sm text-gray-500  px-4 md:p-0">{`Including $${cart?.cost.totalTaxAmount.amount}0 in taxes`}</div>
       <OrderComplete />
     </div>
   );
