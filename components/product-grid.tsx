@@ -10,15 +10,15 @@ export default async function ProductGrid() {
   const carouselProducts = [...products];
 
   return (
-    <div className="w-full pb-6 py-8 flex items-center justify-center px-[10%]">
+    <div className="w-full pb-6 py-8 flex items-center justify-center px-2 md:px-[10%]">
       <div className="max-w-screen-2xl w-full">
         <h3 className="mb-2 text-lg font-semibold">Our Products</h3>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 gap-4 w-full">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-2 md:gap-4 w-full">
           {carouselProducts.map((product, i) => (
             <div
               key={`${product.handle}${i}`}
-              className="relative aspect-square h-[30vh] max-h-[275px] min-w-[250px] w-full max-w-[475px] flex-none"
+              className="relative aspect-square md:h-[30vh] max-h-[275px] md:min-w-[250px] w-full max-w-[475px] flex-none"
             >
               <Link href={`/product/${product.handle}`} className="relative h-full w-full">
                 <GridTileImage

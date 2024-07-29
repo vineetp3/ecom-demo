@@ -17,9 +17,9 @@ const PaymentMethods = () => {
         <Image src={CCImg} height={80} width={100} alt="payment methods cc" />
       </div>
 
-      <div className="flex items-center justify-between  border p-3">
+      <div className="flex items-center justify-between border p-3">
         <div>
-          <input type="radio" id="paypal" name="paymentMethod" className="mr-2" disabled />
+          <input type="radio" id="paypal" name="paymentMethod" className="mr-2 bg-white" disabled />
           <label htmlFor="paypal" className="mr-4">
             PayPal
           </label>

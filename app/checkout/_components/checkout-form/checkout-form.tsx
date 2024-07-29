@@ -14,8 +14,8 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
     address: '',
     apartment: '',
     city: '',
-    state: 'Punjab',
-    pinCode: '',
+    state: 'Michigan',
+    zipCode: '',
     saveInfo: false
   });
   const router = useRouter();
@@ -48,7 +48,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
           placeholder="Email or mobile phone number"
           value={formData.emailOrPhone}
           onChange={handleChange}
-          className="mt-1 block h-12 w-full rounded-md border border-gray-300 px-4 shadow-sm focus:border-blue-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block h-12 w-full rounded-md border bg-white border-gray-300 px-4 shadow-sm focus:border-blue-500 focus:ring-indigo-500 sm:text-sm"
         />
         <div className="mt-2 flex items-center gap-1">
           <input
@@ -56,7 +56,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
             name="emailOffers"
             checked={formData.emailOffers}
             onChange={handleChange}
-            className="h-4 w-4 rounded border-gray-300 text-indigo-600"
+            className="h-4 w-4 rounded bg-white border-gray-300 text-indigo-600"
           />
           <label className="ml-2 text-sm text-gray-600">Email me with news and offers</label>
         </div>
@@ -76,10 +76,10 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
           <input
             type="text"
             name="firstName"
-            placeholder="First name (optional)"
+            placeholder="First name"
             value={formData.firstName}
             onChange={handleChange}
-            className="mt-1 block h-12 w-full rounded-md border border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block h-12 w-full rounded-md bg-white border border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
           <input
             type="text"
@@ -87,7 +87,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
             placeholder="Last name"
             value={formData.lastName}
             onChange={handleChange}
-            className="mt-1 block h-12 w-full rounded-md border border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block h-12 w-full rounded-md bg-white border border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
         </div>
         <input
@@ -96,7 +96,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
           placeholder="Address"
           value={formData.address}
           onChange={handleChange}
-          className="mb-4 mt-1 block h-12 w-full rounded-md border border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mb-4 mt-1 block h-12 w-full rounded-md bg-white border border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <input
           type="text"
@@ -104,7 +104,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
           placeholder="Apartment, suite, etc. (optional)"
           value={formData.apartment}
           onChange={handleChange}
-          className="mb-4 mt-1 block h-12 w-full rounded-md border border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mb-4 mt-1 block h-12 w-full rounded-md bg-white border border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <div className="mb-4 grid grid-cols-2 gap-4">
           <input
@@ -113,7 +113,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
             placeholder="City"
             value={formData.city}
             onChange={handleChange}
-            className="mt-1 block h-12 w-full rounded-md border border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block h-12 w-full rounded-md border bg-white border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
           <div className="flex items-center gap-4">
             <label className="block text-sm font-medium text-gray-700">State</label>
@@ -132,11 +132,11 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
         </div>
         <input
           type="text"
-          name="pinCode"
-          placeholder="PIN code"
-          value={formData.pinCode}
+          name="zipCode"
+          placeholder="Zip Code"
+          value={formData.zipCode}
           onChange={handleChange}
-          className="mb-4 mt-1 block h-12 w-full rounded-md border border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mb-4 mt-1 block h-12 w-full rounded-md border bg-white border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <div className="mb-4 flex items-center">
           <input
@@ -144,7 +144,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
             name="saveInfo"
             checked={formData.saveInfo}
             onChange={handleChange}
-            className="h-4 w-4 rounded border-gray-300 text-indigo-600"
+            className="h-4 w-4 rounded border-gray-300 bg-white text-indigo-600"
           />
           <label className="ml-2 text-sm text-gray-600">Save this information for next time</label>
         </div>

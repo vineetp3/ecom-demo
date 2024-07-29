@@ -14,14 +14,14 @@ export default async function CheckoutCart() {
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center py-4 md:p-0">
       {!cart || cart.lines.length === 0 ? (
         <div className={`mt-20 flex w-full flex-col items-center justify-center overflow-hidden `}>
           <ShoppingCartIcon className="h-16" />
           <p className="mt-6 text-center text-2xl font-bold">Your cart is empty.</p>
         </div>
       ) : (
-        <ul className="flex w-full flex-col gap-2">
+        <ul className="flex w-full flex-col gap-2 px-4 md:px-0">
           {cart?.lines.map((item) => {
             return (
               <li
@@ -47,7 +47,7 @@ export default async function CheckoutCart() {
                   <div className="text-sm"> {item.merchandise.product.title}</div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div>$ {item.cost.totalAmount.amount}</div>
+                  <div>$ {item.cost.totalAmount.amount}0</div>
                   <DeleteItemButton item={item} />
                 </div>
               </li>

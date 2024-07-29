@@ -11,18 +11,17 @@ export default function CheckoutComplete({ offer, cart }: { offer: any; cart?: a
   const amountToPay = discountAbsolute
     ? cartAmount - discountAbsolute
     : cartAmount - (discountPercentage / 100) * cartAmount;
-  console.log(discountAbsolute, discountPercentage);
   return (
-    <div
-      className={` min-h-screen w-full items-center justify-center bg-white px-4 pt-16 ${font.className}`}
+    <div 
+      className={` md:min-h-screen w-full items-center justify-center bg-white md:px-4 py-4 md:py-16 ${font.className}`}
     >
-      <div className="rounded-lg  flex size-full flex-col bg-white px-8">
+      <div className="rounded-lg  flex size-full flex-col bg-white px-2 md:px-8">
         <div className="mb-6 flex flex-col items-start gap-6 text-center">
           <div className="mb-4 flex items-center justify-center gap-4">
             <Image src="/checkmark-circle.png" height={50} width={50} alt="checkmark" />
             <div className="flex flex-col justify-start">
               <p className="text-left text-sm text-gray-600">Confirmation #DQFDHG5E0</p>
-              <h2 className="text-2xl font-semibold">Thank you, Taylor!</h2>
+              <h2 className="text-2xl font-semibold">Thank you for your order!</h2>
             </div>
           </div>
           <div className="w-full">
