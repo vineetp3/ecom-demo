@@ -31,6 +31,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+    cart['userData'] = { ...formData };
     router.push(`${process.env.NEXT_PUBLIC_PAYMENT_REDIRECT}cart=${JSON.stringify(cart)}`);
   };
 
@@ -48,7 +49,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
           placeholder="Email or mobile phone number"
           value={formData.emailOrPhone}
           onChange={handleChange}
-          className="mt-1 block h-12 w-full rounded-md border bg-white border-gray-300 px-4 shadow-sm focus:border-blue-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-blue-500 focus:ring-indigo-500 sm:text-sm"
         />
         <div className="mt-2 flex items-center gap-1">
           <input
@@ -56,7 +57,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
             name="emailOffers"
             checked={formData.emailOffers}
             onChange={handleChange}
-            className="h-4 w-4 rounded bg-white border-gray-300 text-indigo-600"
+            className="h-4 w-4 rounded border-gray-300 bg-white text-indigo-600"
           />
           <label className="ml-2 text-sm text-gray-600">Email me with news and offers</label>
         </div>
@@ -79,7 +80,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
             placeholder="First name"
             value={formData.firstName}
             onChange={handleChange}
-            className="mt-1 block h-12 w-full rounded-md bg-white border border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
           <input
             type="text"
@@ -87,7 +88,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
             placeholder="Last name"
             value={formData.lastName}
             onChange={handleChange}
-            className="mt-1 block h-12 w-full rounded-md bg-white border border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
         </div>
         <input
@@ -96,7 +97,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
           placeholder="Address"
           value={formData.address}
           onChange={handleChange}
-          className="mb-4 mt-1 block h-12 w-full rounded-md bg-white border border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mb-4 mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <input
           type="text"
@@ -104,7 +105,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
           placeholder="Apartment, suite, etc. (optional)"
           value={formData.apartment}
           onChange={handleChange}
-          className="mb-4 mt-1 block h-12 w-full rounded-md bg-white border border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mb-4 mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <div className="mb-4 grid grid-cols-2 gap-4">
           <input
@@ -113,7 +114,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
             placeholder="City"
             value={formData.city}
             onChange={handleChange}
-            className="mt-1 block h-12 w-full rounded-md border bg-white border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
           <div className="flex items-center gap-4">
             <label className="block text-sm font-medium text-gray-700">State</label>
@@ -123,10 +124,56 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
               onChange={handleChange}
               className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             >
-              <option value="Punjab">California</option>
-              <option value="Punjab">Michigan</option>
-              <option value="Punjab">Illinois</option>
-              {/* Add other states here */}
+              <option value="Alabama">Alabama</option>
+              <option value="Alaska">Alaska</option>
+              <option value="Arizona">Arizona</option>
+              <option value="Arkansas">Arkansas</option>
+              <option value="California">California</option>
+              <option value="Colorado">Colorado</option>
+              <option value="Connecticut">Connecticut</option>
+              <option value="Delaware">Delaware</option>
+              <option value="Florida">Florida</option>
+              <option value="Georgia">Georgia</option>
+              <option value="Hawaii">Hawaii</option>
+              <option value="Idaho">Idaho</option>
+              <option value="Illinois">Illinois</option>
+              <option value="Indiana">Indiana</option>
+              <option value="Iowa">Iowa</option>
+              <option value="Kansas">Kansas</option>
+              <option value="Kentucky">Kentucky</option>
+              <option value="Louisiana">Louisiana</option>
+              <option value="Maine">Maine</option>
+              <option value="Maryland">Maryland</option>
+              <option value="Massachusetts">Massachusetts</option>
+              <option value="Michigan">Michigan</option>
+              <option value="Minnesota">Minnesota</option>
+              <option value="Mississippi">Mississippi</option>
+              <option value="Missouri">Missouri</option>
+              <option value="Montana">Montana</option>
+              <option value="Nebraska">Nebraska</option>
+              <option value="Nevada">Nevada</option>
+              <option value="New Hampshire">New Hampshire</option>
+              <option value="New Jersey">New Jersey</option>
+              <option value="New Mexico">New Mexico</option>
+              <option value="New York">New York</option>
+              <option value="North Carolina">North Carolina</option>
+              <option value="North Dakota">North Dakota</option>
+              <option value="Ohio">Ohio</option>
+              <option value="Oklahoma">Oklahoma</option>
+              <option value="Oregon">Oregon</option>
+              <option value="Pennsylvania">Pennsylvania</option>
+              <option value="Rhode Island">Rhode Island</option>
+              <option value="South Carolina">South Carolina</option>
+              <option value="South Dakota">South Dakota</option>
+              <option value="Tennessee">Tennessee</option>
+              <option value="Texas">Texas</option>
+              <option value="Utah">Utah</option>
+              <option value="Vermont">Vermont</option>
+              <option value="Virginia">Virginia</option>
+              <option value="Washington">Washington</option>
+              <option value="West Virginia">West Virginia</option>
+              <option value="Wisconsin">Wisconsin</option>
+              <option value="Wyoming">Wyoming</option>
             </select>
           </div>
         </div>
@@ -136,7 +183,7 @@ const CheckoutForm = ({ cart }: { cart?: any }) => {
           placeholder="Zip Code"
           value={formData.zipCode}
           onChange={handleChange}
-          className="mb-4 mt-1 block h-12 w-full rounded-md border bg-white border-gray-300 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mb-4 mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <div className="mb-4 flex items-center">
           <input
