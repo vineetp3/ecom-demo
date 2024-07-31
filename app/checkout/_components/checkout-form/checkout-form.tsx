@@ -48,7 +48,7 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="w-full rounded-md p-4 pb-8">
+      <form onSubmit={handleSubmit} className="w-full rounded-md md:p-4 md:pb-8">
         <div className="my-4 flex flex-col gap-2">
           <label className="block text-2xl font-semibold text-gray-900">Contact</label>
           <input
@@ -71,9 +71,9 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
           </div>
         </div>
 
-        <div className="mb-4 mt-8 flex w-full flex-col gap-1">
+        <div className="mb-2 md:mb-4 mt-8 flex w-full flex-col gap-1">
           <label className="block text-2xl font-semibold text-gray-900">Delivery</label>
-          <div className="mb-4 mt-1">
+          <div className="mb-2 md:mb-4 mt-1">
             <label className="block text-sm font-medium text-gray-700">Country/Region</label>
             <select className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-gray-100 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
               <option value="usa" className="px-4">
@@ -81,7 +81,7 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
               </option>
             </select>
           </div>
-          <div className="mb-4 grid grid-cols-2 gap-4">
+          <div className="mb-2 md:mb-4 grid grid-cols-2 gap-4">
             <input
               type="text"
               name="firstName"
@@ -105,7 +105,7 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
             placeholder="Address"
             value={formData.address}
             onChange={handleChange}
-            className="mb-4 mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mb-2 md:mb-4 mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
           <input
             type="text"
@@ -113,9 +113,9 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
             placeholder="Apartment, suite, etc. (optional)"
             value={formData.apartment}
             onChange={handleChange}
-            className="mb-4 mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mb-2 md:mb-4 mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
-          <div className="mb-4 grid grid-cols-2 gap-4">
+          <div className="mb-2 md:mb-4 grid grid-cols-2 gap-4">
             <input
               type="text"
               name="city"
@@ -191,7 +191,7 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
             placeholder="Zip Code"
             value={formData.zipCode}
             onChange={handleChange}
-            className="mb-4 mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mb-2 md:mb-4 mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
           <div className="mb-4 flex items-center">
             <input
@@ -211,7 +211,7 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
           <label className="block text-lg font-medium text-gray-700">Shipping method</label>
           <input
             type="text"
-            placeholder="Enter your shipping address to view available shipping methods."
+            placeholder="Fedex Ground (2-3 days)"
             disabled
             className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-gray-100 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
