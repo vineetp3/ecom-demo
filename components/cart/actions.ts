@@ -57,7 +57,7 @@ export async function clearCart(payload: { lineIds: string[] }) {
     const res = await removeFromCart(cartId, [...payload.lineIds]);
     revalidateTag(TAGS.cart);
     revalidatePath('/checkout-complete');
-    revalidatePath('/');
+    revalidatePath('/', 'layout');
     return res;
   } catch (e) {
     return 'Error clearing cart, please try again';
