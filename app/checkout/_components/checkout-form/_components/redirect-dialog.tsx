@@ -36,7 +36,7 @@ const RedirectingDialog = ({
           <p className="text-center font-normal text-gray-600">
             Click
             <Link href={redirectUrl} className='mx-1 text-blue-500'>here</Link>
-            if redirection does not happen withing 3 seconds..
+            if redirection does not happen within 3 seconds..
           </p>
         </Dialog.Content>
       </Dialog.Portal>
