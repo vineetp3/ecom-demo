@@ -3,14 +3,14 @@
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
+
 export default function OrderComplete() {
   const searchParams = useSearchParams();
-  const offer = searchParams.get('offer') || '';
-  // const offerSponser = offer
-  if (!offer.length) {
+  const cart = searchParams.get('cart') || '';
+  if (!cart.length) {
     return <></>;
   }
-  const parsedOffer = JSON.parse(offer);
+  const parsedCart = JSON.parse(cart);
   return (
     <div className="mt-8 flex w-full items-center justify-center gap-2 rounded-lg border border-black bg-[#FFEDFE] px-1 py-4 shadow-sm shadow-black drop-shadow-sm md:gap-4">
       <Image src="/order-complete.png" height={25} width={50} alt="persona-icon" />
@@ -25,10 +25,10 @@ export default function OrderComplete() {
         <span
           className="font-bold text-gray-800"
           style={{
-            color: `#${parsedOffer.accent}`
+            color: `#${parsedCart['offer'].accent}`
           }}
         >
-          {parsedOffer.label}
+          {parsedCart['offer'].label}
         </span>
       </div>
     </div>

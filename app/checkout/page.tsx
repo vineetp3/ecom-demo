@@ -1,4 +1,5 @@
 import { getCart } from 'lib/shopify';
+import { Cart } from 'lib/shopify/types';
 import { Sora } from 'next/font/google';
 import { cookies } from 'next/headers';
 import CheckoutCart from './_components/checkout-cart/checkout-cart';
@@ -20,7 +21,7 @@ const Checkout = async () => {
       <div
         className={`h-[calc(100vh-7rem)] basis-1/2 overflow-scroll dark:border-neutral-500 ${styles.noScrollbar}`}
       >
-        <CheckoutForm cart={cart} />
+        <CheckoutForm cart={cart || {} as Cart} />
       </div>
       <div className="basis-1/2 bg-neutral-100 md:p-8 dark:bg-neutral-800">
         <CheckoutCart />

@@ -3,28 +3,65 @@
 import { Inter } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
 
 const font = Inter({ subsets: ['latin'] });
 
-export default function CheckoutComplete({ offer, cart }: { offer: any; cart?: any }) {
-  const parsedOffer = JSON.parse(offer) || '';
-  const userData = parsedOffer['userData'];
-  userData.emailOrPhone = userData.emailOrPhone || 'defaultEmail@person3.io';
-  userData.emailOffers = userData.emailOffers !== undefined ? userData.emailOffers : true;
-  userData.firstName = userData.firstName || 'John';
-  userData.lastName = userData.lastName || 'Doe';
-  userData.address = userData.address || '123 Default St.';
-  userData.apartment = userData.apartment || 'Apt 1';
-  userData.city = userData.city || 'Default City';
-  userData.state = userData.state || 'Default State';
-  userData.zipCode = userData.zipCode || '00000';
-  userData.saveInfo = userData.saveInfo !== undefined ? userData.saveInfo : false;
+export default function CheckoutComplete({ cartWithOffer }: { cartWithOffer: any }) {
+  const [userDetails, setUserDetails] = useState<any>({});
+  const router = useRouter();
+  useEffect(() => {
+    const parsedCartWithOffer = JSON.parse(cartWithOffer) || '';
+    const userData = parsedCartWithOffer['userData'];
+    userData.emailOrPhone = userData.emailOrPhone || 'defaultEmail@person3.io';
+    userData.emailOffers = userData.emailOffers !== undefined ? userData.emailOffers : true;
+    userData.firstName = userData.firstName || 'John';
+    userData.lastName = userData.lastName || 'Doe';
+    userData.address = userData.address || '123 Default St.';
+    userData.apartment = userData.apartment || 'Apt 1';
+    userData.city = userData.city || 'Default City';
+    userData.state = userData.state || 'Default State';
+    userData.zipCode = userData.zipCode || '00000';
+    userData.saveInfo = userData.saveInfo !== undefined ? userData.saveInfo : false;
+    setUserDetails({
+      ...userData
+    });
 
-  const { discountAbsolute, discountPercentage } = parsedOffer?.offerDetails || {};
-  const cartAmount = Number(cart.cost.totalAmount.amount) || 50;
+   
+  }, [cartWithOffer]);
+
+  const parsedCartWithOffer = JSON.parse(cartWithOffer) || '';
+  const { discountAbsolute, discountPercentage } = parsedCartWithOffer['offer']?.offerDetails || {};
+  const cartAmount = Number(parsedCartWithOffer.cost.totalAmount.amount) || 50;
   const amountToPay = discountAbsolute
     ? cartAmount - discountAbsolute
     : cartAmount - (discountPercentage / 100) * cartAmount;
+
+  const onClickContinue = async () => {
+    const lineIds = parsedCartWithOffer.lines.map((item: any) => item.id);
+    try {
+      const response = await fetch('/api/clearCart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Custom-Header': 'CustomValue'
+        },
+        body: JSON.stringify(lineIds)
+      });
+      const data = await response.json();
+      
+      
+      if(data.message) {
+        await router.refresh();
+        router.push('/')
+      }
+      console.log('Server response:', data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   return (
     <div
       className={` w-full items-center justify-center bg-white py-4 md:min-h-screen md:px-4 md:py-16 ${font.className}`}
@@ -54,7 +91,7 @@ export default function CheckoutComplete({ offer, cart }: { offer: any; cart?: a
                 <input
                   type="checkbox"
                   className="form-checkbox h-4 w-4 text-blue-600"
-                  checked={userData.emailOffers}
+                  checked={userDetails.emailOffers}
                   disabled
                 />
                 <span className="ml-2 text-sm text-gray-600">Email me with news and offers</span>
@@ -68,7 +105,7 @@ export default function CheckoutComplete({ offer, cart }: { offer: any; cart?: a
           <div className="grid grid-flow-row-dense grid-cols-2 justify-between gap-y-6 px-4">
             <div className="flex flex-col gap-1 break-words  text-sm">
               <span className="font-light text-gray-500">Contact information:</span>
-              <span>{userData.emailOrPhone || 'taylor.chen@domain.com'}</span>
+              <span>{userDetails.emailOrPhone || 'taylor.chen@domain.com'}</span>
             </div>
             <div className="flex flex-col gap-1 text-sm">
               <span className="font-light text-gray-500">Payment method:</span>
@@ -79,15 +116,15 @@ export default function CheckoutComplete({ offer, cart }: { offer: any; cart?: a
             </div>
             <div className="flex flex-col gap-1 text-sm">
               <span className="font-light text-gray-500">Shipping address:</span>
-              <span>{`${userData.firstName} ${userData.lastName}`}</span>
-              <span>{`${userData.address}`}</span>
-              <span>{`${userData.city} ${userData.state}, ${userData.zipCode}`}</span>
+              <span>{`${userDetails.firstName} ${userDetails.lastName}`}</span>
+              <span>{`${userDetails.address}`}</span>
+              <span>{`${userDetails.city} ${userDetails.state}, ${userDetails.zipCode}`}</span>
             </div>
             <div className="flex flex-col gap-1 text-sm">
               <span className="font-light text-gray-500">Billing address:</span>
-              <span>{`${userData.firstName} ${userData.lastName}`}</span>
-              <span>{`${userData.address}`}</span>
-              <span>{`${userData.city} ${userData.state}, ${userData.zipCode}`}</span>
+              <span>{`${userDetails.firstName} ${userDetails.lastName}`}</span>
+              <span>{`${userDetails.address}`}</span>
+              <span>{`${userDetails.city} ${userDetails.state}, ${userDetails.zipCode}`}</span>
             </div>
             <div className="flex flex-col gap-1 text-sm">
               <span className="font-light text-gray-500">Shipping method:</span> FedEx Ground
@@ -108,7 +145,9 @@ export default function CheckoutComplete({ offer, cart }: { offer: any; cart?: a
           <Link href="#" className="text-sm text-blue-500">
             Need help? Contact us
           </Link>
-          <button className=" rounded bg-gray-700 px-4 py-6 text-white">Continue shopping</button>
+          <button className=" rounded bg-gray-700 px-4 py-6 text-white" onClick={onClickContinue}>
+            Continue shopping
+          </button>
         </div>
       </div>
     </div>

@@ -1,14 +1,9 @@
-import { getCart } from 'lib/shopify';
-import { cookies } from 'next/headers';
-import OrderComplete from './order-complete';
+'use client';
 
-export default async function OrderSummary() {
-  const cartId = cookies().get('cartId')?.value;
-  let cart;
+import { Cart } from 'lib/shopify/types';
 
-  if (cartId) {
-    cart = await getCart(cartId);
-  }
+export default  function OrderSummary({cart} : {cart : Cart | undefined}) {
+
   return (
     <div className="mt-2 w-full">
       <div className="space-y-1 text-sm px-4 md:p-0">
@@ -48,7 +43,6 @@ export default async function OrderSummary() {
         </div>
       </div>
       <div className="mt-2 text-sm text-gray-500  px-4 md:p-0">{`Including $${cart?.cost.totalTaxAmount.amount}0 in taxes`}</div>
-      <OrderComplete />
     </div>
   );
 }
