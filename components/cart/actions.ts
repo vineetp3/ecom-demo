@@ -46,6 +46,21 @@ export async function removeItem(prevState: any, lineId: string) {
   }
 }
 
+export async function clearCart(payload: { lineIds: string[] }) {
+  const cartId = cookies().get('cartId')?.value;
+
+  if (!cartId) {
+    return 'Missing cart ID';
+  }
+
+  try {
+    await removeFromCart(cartId, [...payload.lineIds]);
+    revalidateTag(TAGS.cart);
+  } catch (e) {
+    return 'Error clearing cart, please try again';
+  }
+}
+
 export async function updateItemQuantity(
   prevState: any,
   payload: {
