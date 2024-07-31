@@ -2,10 +2,8 @@
 
 import { Inter } from 'next/font/google';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
 
 const font = Inter({ subsets: ['latin'] });
 
@@ -28,8 +26,6 @@ export default function CheckoutComplete({ cartWithOffer }: { cartWithOffer: any
     setUserDetails({
       ...userData
     });
-
-   
   }, [cartWithOffer]);
 
   const parsedCartWithOffer = JSON.parse(cartWithOffer) || '';
@@ -45,23 +41,43 @@ export default function CheckoutComplete({ cartWithOffer }: { cartWithOffer: any
       const response = await fetch('/api/clearCart', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Custom-Header': 'CustomValue'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(lineIds)
       });
       const data = await response.json();
-      
-      
-      if(data.message) {
+
+      if (data.message) {
         await router.refresh();
-        router.push('/')
+        router.push('/');
       }
       console.log('Server response:', data);
     } catch (error) {
       console.error('Error:', error);
     }
   };
+
+  const onClickClearCart = async () => {
+    const lineIds = parsedCartWithOffer.lines.map((item: any) => item.id);
+    try {
+      const response = await fetch('/api/clearCart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(lineIds)
+      });
+      const data = await response.json();
+
+      if (data.message) {
+        await router.refresh();
+      }
+      console.log('Server response:', data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <div
       className={` w-full items-center justify-center bg-white py-4 md:min-h-screen md:px-4 md:py-16 ${font.className}`}
@@ -142,9 +158,9 @@ export default function CheckoutComplete({ cartWithOffer }: { cartWithOffer: any
         </div>
 
         <div className="mt-6 flex w-full items-center justify-between">
-          <Link href="#" className="text-sm text-blue-500">
-            Need help? Contact us
-          </Link>
+          <button onClick={onClickClearCart} className="text-sm text-blue-500">
+            Clear your current cart
+          </button>
           <button className=" rounded bg-gray-700 px-4 py-6 text-white" onClick={onClickContinue}>
             Continue shopping
           </button>
