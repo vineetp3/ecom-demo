@@ -2,12 +2,12 @@
 
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
+import SponsoredBanner from './sponsored-banner';
 
-export default function OrderCompletedDetails() {
+export default function CompletedCart() {
   const searchParams = useSearchParams();
-  const cartWithOffer = searchParams.get('cart');
-  const parsedCartWithOffer = JSON.parse(cartWithOffer || '');
-
+  const cartWithOffer = searchParams.get('cart') || '';
+  const parsedCartWithOffer = JSON.parse(cartWithOffer);
   return (
     <div className="mt-2 w-full">
       <ul className="flex w-full flex-col gap-2 px-4 md:px-0">
@@ -79,6 +79,7 @@ export default function OrderCompletedDetails() {
         </div>
       </div>
       <div className="mt-2 px-4 text-sm  text-gray-500 md:p-0">{`Including $${parsedCartWithOffer?.cost.totalTaxAmount.amount}0 in taxes`}</div>
+      <SponsoredBanner />
     </div>
   );
 }

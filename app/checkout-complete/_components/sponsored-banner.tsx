@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
 
-export default function OrderComplete() {
+export default function SponsoredBanner() {
   const searchParams = useSearchParams();
   const cart = searchParams.get('cart') || '';
   if (!cart.length) {

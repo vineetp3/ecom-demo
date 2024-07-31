@@ -54,8 +54,7 @@ export async function clearCart(payload: { lineIds: string[] }) {
   }
 
   try {
-    await removeFromCart(cartId, [...payload.lineIds]);
-    revalidateTag(TAGS.cart);
+   return  await removeFromCart(cartId, [...payload.lineIds]);
   } catch (e) {
     return 'Error clearing cart, please try again';
   }
