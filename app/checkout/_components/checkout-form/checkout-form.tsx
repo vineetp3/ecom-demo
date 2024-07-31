@@ -1,9 +1,8 @@
 'use client';
 
 import { Cart } from 'lib/shopify/types';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import CheckoutComplete from './_components/checkout-complete';
 import PaymentMethods from './_components/payment-methods';
 import RedirectDialog from './_components/redirect-dialog';
 
@@ -24,7 +23,6 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
   const [open, setOpen] = useState(false);
   const [redirectUrl, setRedirectUrl] = useState('/');
   const router = useRouter();
-  const searchParams = useSearchParams();
   const handleChange = (e: any) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -47,12 +45,6 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
       );
     }, 3000);
   };
-
-  const cartWithOffer = searchParams.get('cart');
-  // const isCartCleared = searchParams.get()
-  if (cartWithOffer) {
-    return <CheckoutComplete cartWithOffer={cartWithOffer} />;
-  }
 
   return (
     <>

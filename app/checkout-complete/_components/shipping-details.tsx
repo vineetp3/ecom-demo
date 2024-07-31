@@ -2,13 +2,16 @@
 
 import { Inter } from 'next/font/google';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const font = Inter({ subsets: ['latin'] });
 
-export default function CheckoutComplete({ cartWithOffer }: { cartWithOffer: any }) {
+export default function ShippingDetails() {
   const [userDetails, setUserDetails] = useState<any>({});
+  const searchParams = useSearchParams();
+  const cartWithOffer = searchParams.get('cart') || '';
   const router = useRouter();
   useEffect(() => {
     const parsedCartWithOffer = JSON.parse(cartWithOffer) || '';
@@ -35,27 +38,6 @@ export default function CheckoutComplete({ cartWithOffer }: { cartWithOffer: any
     ? cartAmount - discountAbsolute
     : cartAmount - (discountPercentage / 100) * cartAmount;
 
-  const onClickContinue = async () => {
-    const lineIds = parsedCartWithOffer.lines.map((item: any) => item.id);
-    try {
-      const response = await fetch('/api/clearCart', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(lineIds)
-      });
-      const data = await response.json();
-
-      if (data.message) {
-        await router.refresh();
-        router.push('/');
-      }
-      console.log('Server response:', data);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
 
   const onClickClearCart = async () => {
     const lineIds = parsedCartWithOffer.lines.map((item: any) => item.id);
@@ -161,9 +143,9 @@ export default function CheckoutComplete({ cartWithOffer }: { cartWithOffer: any
           <button onClick={onClickClearCart} className="text-sm text-blue-500">
             Clear your current cart
           </button>
-          <button className=" rounded bg-gray-700 px-4 py-6 text-white" onClick={onClickContinue}>
+          <Link className=" rounded bg-gray-700 px-4 py-6 text-white" href="/">
             Continue shopping
-          </button>
+          </Link>
         </div>
       </div>
     </div>

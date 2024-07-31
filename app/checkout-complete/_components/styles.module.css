@@ -1,0 +1,126 @@
+.DialogOverlay {
+  background-color: #261f26bf;
+  position: fixed;
+  inset: 0;
+  z-index: 9999999999;
+  animation: overlayShow 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.DialogContent {
+  z-index: 99999999999;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow:
+    hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30vw;
+  max-width: 650px;
+  max-height: 85vh;
+  padding: 40px 20px;
+  animation: contentShow 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  @media screen and (max-width: 768px) {
+    width: 90vw;
+    padding: 20px 0px;
+  }
+}
+
+.DialogOverlay[data-state='closed'] {
+  animation: overlayHide 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.DialogContent[data-state='closed'] {
+  animation: contentHide 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.DialogContent:focus {
+  outline: none;
+}
+
+.DialogTitle {
+  margin: 0;
+  font-weight: 500;
+  color: var(--mauve-12);
+  font-size: 18px;
+  text-align: center;
+  /* font-weight: 800; */
+}
+
+.DialogDescription {
+  text-align: center;
+  color: var(--mauve-11);
+  font-size: 20px;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 250px;
+}
+
+.colorBanding {
+    background: linear-gradient(90deg, #ff0000, #ff6347, #ff4500, #dc143c, #b22222, #8b0000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: colorBanding 2s infinite;
+    background-size: 300%;
+}
+
+@keyframes colorBanding {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes overlayHide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes contentShow {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes contentHide {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+}

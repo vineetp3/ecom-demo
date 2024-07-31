@@ -1,9 +1,8 @@
+import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { DeleteItemButton } from 'components/cart/delete-item-button';
 import { getCart } from 'lib/shopify';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
-import OrderComplete from './_components/order-complete';
-import OrderCompletedDetails from './_components/order-complete-details';
 import OrderSummary from './_components/order-summary';
 
 export default async function CheckoutCart() {
@@ -17,10 +16,10 @@ export default async function CheckoutCart() {
   return (
     <div className="flex flex-col items-center py-4 md:p-0">
       {!cart || cart.lines.length === 0 ? (
-        <>
-          <OrderCompletedDetails />
-          <OrderComplete />
-        </>
+         <div className={`mt-20 flex w-full flex-col items-center justify-center overflow-hidden `}>
+         <ShoppingCartIcon className="h-16" />
+         <p className="mt-6 text-center text-2xl font-bold">Your cart is empty.</p>
+       </div>
       ) : (
         <>
           <ul className="flex w-full flex-col gap-2 px-4 md:px-0">
@@ -57,7 +56,6 @@ export default async function CheckoutCart() {
             })}
           </ul>
           <OrderSummary cart={cart} />
-          <OrderComplete />
         </>
       )}
     </div>
