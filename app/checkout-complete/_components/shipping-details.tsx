@@ -2,7 +2,6 @@
 
 import { Inter } from 'next/font/google';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -38,7 +37,6 @@ export default function ShippingDetails() {
     ? cartAmount - discountAbsolute
     : cartAmount - (discountPercentage / 100) * cartAmount;
 
-
   const onClickClearCart = async () => {
     const lineIds = parsedCartWithOffer.lines.map((item: any) => item.id);
     try {
@@ -58,6 +56,11 @@ export default function ShippingDetails() {
     } catch (error) {
       console.error('Error:', error);
     }
+  };
+
+  const onClickContinueShopping = async () => {
+    await router.refresh();
+    router.push('/');
   };
 
   return (
@@ -143,9 +146,12 @@ export default function ShippingDetails() {
           <button onClick={onClickClearCart} className="text-sm text-blue-500">
             Clear your current cart
           </button>
-          <Link className=" rounded bg-gray-700 px-4 py-6 text-white" href="/">
+          <button
+            className=" rounded bg-gray-700 px-4 py-6 text-white"
+            onClick={onClickContinueShopping}
+          >
             Continue shopping
-          </Link>
+          </button>
         </div>
       </div>
     </div>
