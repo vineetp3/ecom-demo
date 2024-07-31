@@ -77,10 +77,6 @@ export default function OrderCompletedDetails() {
           <span className="font-semibold">Total</span>
           <span className="font-medium">{`$${parsedCartWithOffer?.cost.totalAmount.amount}0`}</span>
         </div>
-        <div className="mt-2 flex items-center justify-between">
-          <span className="font-semibold">Total</span>
-          <span className="font-medium">{`$${parsedCartWithOffer?.cost.totalAmount.amount}0`}</span>
-        </div>
       </div>
       <div className="mt-2 px-4 text-sm  text-gray-500 md:p-0">{`Including $${parsedCartWithOffer?.cost.totalTaxAmount.amount}0 in taxes`}</div>
     </div>
