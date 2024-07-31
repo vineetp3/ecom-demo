@@ -27,20 +27,22 @@ const PaymentMethods = () => {
         <Image src={PaypalImg} alt="PayPal" className="h-6" />
       </div>
 
-      <div className="border border-[#253B80] bg-[#EFF5FF] px-3 py-4 pb-6 flex flex-col w-full gap-4 items-center rounded-b-lg font-normal">
+      <div className="flex w-full flex-col items-center gap-4 rounded-b-lg border border-[#253B80] bg-[#EFF5FF] px-3 py-4 pb-6 font-normal">
         <div className="mb-2 flex items-center self-start">
-          <input type="radio" id="card" name="paymentMethod" className="mr-2" checked/>
-          <Image src={PersonaImg} height={60} width={140} alt="Persona" className="h-4" />
-          <span className="text-sm">Pay with Persona to claim offers</span>
+          <input type="radio" id="card" name="paymentMethod" className="mr-2" checked />
+          <div className='flex gap-2 md:gap-1 items-center justify-center flex-wrap -ml-4 md:ml-0'>
+            <Image src={PersonaImg} height={60} width={140} alt="Persona" className="h-4" />
+            <span className="text-sm">Pay with Persona to claim offers</span>
+          </div>
         </div>
-        <Image src={RedirectIcon} alt="redirect-icon" className='h-16 w-28'></Image>
-        <p className="text-sm text-gray-600 text-center px-12">
+        <Image src={RedirectIcon} alt="redirect-icon" className="h-16 w-28"></Image>
+        <p className="px-12 text-center text-sm text-gray-600">
           After clicking Pay now, you will be redirected to Persona - Sponsored checkout to complete
           your purchase securely.
         </p>
       </div>
 
-      <div className="mb-4 flex items-center mt-4">
+      <div className="mb-4 mt-4 flex items-center">
         <input type="checkbox" id="sameAddress" className="mr-2" checked />
         <label htmlFor="sameAddress" className="text-sm">
           Use shipping address as billing address
