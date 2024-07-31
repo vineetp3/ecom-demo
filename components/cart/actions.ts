@@ -2,7 +2,7 @@
 
 import { TAGS } from 'lib/constants';
 import { addToCart, createCart, getCart, removeFromCart, updateCart } from 'lib/shopify';
-import { revalidateTag } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
 export async function addItem(prevState: any, selectedVariantId: string | undefined) {
@@ -54,7 +54,10 @@ export async function clearCart(payload: { lineIds: string[] }) {
   }
 
   try {
-   return  await removeFromCart(cartId, [...payload.lineIds]);
+    const res = await removeFromCart(cartId, [...payload.lineIds]);
+    revalidateTag(TAGS.cart);
+    revalidatePath('/checkout-complete')
+    return res;
   } catch (e) {
     return 'Error clearing cart, please try again';
   }

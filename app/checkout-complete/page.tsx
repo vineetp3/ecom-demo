@@ -19,8 +19,7 @@ const CheckoutComplete = async () => {
     if (cart && cart.lines && cart?.lines.length > 0) {
       const lineIds = cart.lines.map((item: any) => item.id);
 
-      const res = await clearCart({ lineIds: [...lineIds] });
-      console.log('res', res)
+      await clearCart({ lineIds: [...lineIds] });
       revalidateTag(TAGS.cart);
     }
   }
