@@ -3,11 +3,37 @@
 import { Cart } from 'lib/shopify/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import * as Yup from 'yup';
 import PaymentMethods from './_components/payment-methods';
 import RedirectDialog from './_components/redirect-dialog';
+import { states } from './constants';
+
+interface FormData {
+  emailOrPhone: string;
+  emailOffers: boolean;
+  firstName: string;
+  lastName: string;
+  address: string;
+  apartment: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  saveInfo: boolean;
+}
+
+const validationSchema = Yup.object().shape({
+  emailOrPhone: Yup.string().required('Email or phone is required'),
+  firstName: Yup.string().required('First name is required'),
+  lastName: Yup.string().required('Last name is required'),
+  address: Yup.string().required('Address is required'),
+  city: Yup.string().required('City is required'),
+  zipCode: Yup.string()
+    .required('Zip code is required')
+    .matches(/^\d{5}$/, 'Zip code must be 5 digits')
+});
 
 const CheckoutForm = ({ cart }: { cart: Cart }) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     emailOrPhone: '',
     emailOffers: true,
     firstName: '',
@@ -19,9 +45,10 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
     zipCode: '',
     saveInfo: false
   });
-
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const [open, setOpen] = useState(false);
   const [redirectUrl, setRedirectUrl] = useState('/');
+
   const router = useRouter();
   const handleChange = (e: any) => {
     const { name, value, type, checked } = e.target;
@@ -29,21 +56,36 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
       ...formData,
       [name]: type === 'checkbox' ? checked : value
     });
+    setValidationErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
+    }));
   };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const cartWithUserData = { ...cart, userData: { ...formData } };
-
-    setOpen(true);
-    setRedirectUrl(
-      `${process.env.NEXT_PUBLIC_PAYMENT_REDIRECT}cart=${JSON.stringify(cartWithUserData)}`
-    );
-    setTimeout(() => {
-      router.push(
+    try {
+      await validationSchema.validate(formData, { abortEarly: false });
+      setValidationErrors({});
+      setOpen(true);
+      setRedirectUrl(
         `${process.env.NEXT_PUBLIC_PAYMENT_REDIRECT}cart=${JSON.stringify(cartWithUserData)}`
       );
-    }, 3000);
+      setTimeout(() => {
+        router.push(
+          `${process.env.NEXT_PUBLIC_PAYMENT_REDIRECT}cart=${JSON.stringify(cartWithUserData)}`
+        );
+      }, 1500);
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errors = err.inner.reduce((acc: Record<string, string>, error) => {
+          if (error.path) acc[error.path] = error.message;
+          return acc;
+        }, {});
+        setValidationErrors(errors);
+      }
+    }
   };
 
   return (
@@ -59,6 +101,9 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
             onChange={handleChange}
             className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-blue-500 focus:ring-indigo-500 sm:text-sm"
           />
+          {validationErrors.emailOrPhone && (
+            <p className="text-sm text-red-500">{validationErrors.emailOrPhone}</p>
+          )}
           <div className="mt-2 flex items-center gap-1">
             <input
               type="checkbox"
@@ -71,9 +116,9 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
           </div>
         </div>
 
-        <div className="mb-2 md:mb-4 mt-8 flex w-full flex-col gap-1">
+        <div className="mt-8 flex w-full flex-col gap-3">
           <label className="block text-2xl font-semibold text-gray-900">Delivery</label>
-          <div className="mb-2 md:mb-4 mt-1">
+          <div className="mt-1">
             <label className="block text-sm font-medium text-gray-700">Country/Region</label>
             <select className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-gray-100 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
               <option value="usa" className="px-4">
@@ -81,118 +126,98 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
               </option>
             </select>
           </div>
-          <div className="mb-2 md:mb-4 grid grid-cols-2 gap-4">
-            <input
-              type="text"
-              name="firstName"
-              placeholder="First name"
-              value={formData.firstName}
-              onChange={handleChange}
-              className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
-            <input
-              type="text"
-              name="lastName"
-              placeholder="Last name"
-              value={formData.lastName}
-              onChange={handleChange}
-              className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="outline-none">
+              <input
+                type="text"
+                name="firstName"
+                placeholder="First name"
+                value={formData.firstName}
+                onChange={handleChange}
+                className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+              {validationErrors.firstName && (
+                <p className="col-span-2 mt-1 text-sm text-red-500">{validationErrors.firstName}</p>
+              )}
+            </div>
+            <div className="outline-none">
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Last name"
+                value={formData.lastName}
+                onChange={handleChange}
+                className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+              {validationErrors.lastName && (
+                <p className="col-span-2 mt-1 text-sm text-red-500">{validationErrors.lastName}</p>
+              )}
+            </div>
           </div>
-          <input
-            type="text"
-            name="address"
-            placeholder="Address"
-            value={formData.address}
-            onChange={handleChange}
-            className="mb-2 md:mb-4 mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-          />
+          <div className="outline-none">
+            <input
+              type="text"
+              name="address"
+              placeholder="Address"
+              value={formData.address}
+              onChange={handleChange}
+              className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+            {validationErrors.address && (
+              <p className="text-sm text-red-500">{validationErrors.address}</p>
+            )}
+          </div>
+
           <input
             type="text"
             name="apartment"
             placeholder="Apartment, suite, etc. (optional)"
             value={formData.apartment}
             onChange={handleChange}
-            className="mb-2 md:mb-4 mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
-          <div className="mb-2 md:mb-4 grid grid-cols-2 gap-4">
-            <input
-              type="text"
-              name="city"
-              placeholder="City"
-              value={formData.city}
-              onChange={handleChange}
-              className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            />
-            <div className="flex items-center gap-4">
+          <div className="flex justify-between w-full gap-4 items-start">
+            <div className="outline-none flex-grow">
+              <input
+                type="text"
+                name="city"
+                placeholder="City"
+                value={formData.city}
+                onChange={handleChange}
+                className="block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+              {validationErrors.city && (
+                <p className="col-span-2 mt-1 text-sm text-red-500">{validationErrors.city}</p>
+              )}
+            </div>
+            <div className="flex items-center gap-4 flex-grow">
               <label className="block text-sm font-medium text-gray-700">State</label>
               <select
                 name="state"
                 value={formData.state}
                 onChange={handleChange}
-                className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="block h-12 w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               >
-                <option value="Alabama">Alabama</option>
-                <option value="Alaska">Alaska</option>
-                <option value="Arizona">Arizona</option>
-                <option value="Arkansas">Arkansas</option>
-                <option value="California">California</option>
-                <option value="Colorado">Colorado</option>
-                <option value="Connecticut">Connecticut</option>
-                <option value="Delaware">Delaware</option>
-                <option value="Florida">Florida</option>
-                <option value="Georgia">Georgia</option>
-                <option value="Hawaii">Hawaii</option>
-                <option value="Idaho">Idaho</option>
-                <option value="Illinois">Illinois</option>
-                <option value="Indiana">Indiana</option>
-                <option value="Iowa">Iowa</option>
-                <option value="Kansas">Kansas</option>
-                <option value="Kentucky">Kentucky</option>
-                <option value="Louisiana">Louisiana</option>
-                <option value="Maine">Maine</option>
-                <option value="Maryland">Maryland</option>
-                <option value="Massachusetts">Massachusetts</option>
-                <option value="Michigan">Michigan</option>
-                <option value="Minnesota">Minnesota</option>
-                <option value="Mississippi">Mississippi</option>
-                <option value="Missouri">Missouri</option>
-                <option value="Montana">Montana</option>
-                <option value="Nebraska">Nebraska</option>
-                <option value="Nevada">Nevada</option>
-                <option value="New Hampshire">New Hampshire</option>
-                <option value="New Jersey">New Jersey</option>
-                <option value="New Mexico">New Mexico</option>
-                <option value="New York">New York</option>
-                <option value="North Carolina">North Carolina</option>
-                <option value="North Dakota">North Dakota</option>
-                <option value="Ohio">Ohio</option>
-                <option value="Oklahoma">Oklahoma</option>
-                <option value="Oregon">Oregon</option>
-                <option value="Pennsylvania">Pennsylvania</option>
-                <option value="Rhode Island">Rhode Island</option>
-                <option value="South Carolina">South Carolina</option>
-                <option value="South Dakota">South Dakota</option>
-                <option value="Tennessee">Tennessee</option>
-                <option value="Texas">Texas</option>
-                <option value="Utah">Utah</option>
-                <option value="Vermont">Vermont</option>
-                <option value="Virginia">Virginia</option>
-                <option value="Washington">Washington</option>
-                <option value="West Virginia">West Virginia</option>
-                <option value="Wisconsin">Wisconsin</option>
-                <option value="Wyoming">Wyoming</option>
+                {states.map((item) => (
+                  <option key={item.value} label={item.label} value={item.value} />
+                ))}
               </select>
             </div>
           </div>
-          <input
-            type="text"
-            name="zipCode"
-            placeholder="Zip Code"
-            value={formData.zipCode}
-            onChange={handleChange}
-            className="mb-2 md:mb-4 mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-          />
+          <div className="outline-none">
+            <input
+              type="text"
+              name="zipCode"
+              placeholder="Zip Code"
+              value={formData.zipCode}
+              onChange={handleChange}
+              className="mt-1 block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+            {validationErrors.zipCode && (
+              <p className="mt-1 text-sm text-red-500">{validationErrors.zipCode}</p>
+            )}
+          </div>
+
           <div className="mb-4 flex items-center">
             <input
               type="checkbox"
