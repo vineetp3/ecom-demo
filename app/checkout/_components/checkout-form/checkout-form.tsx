@@ -281,7 +281,7 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
           <PaymentMethods />
         </div>
         {isError && <p className="mb-2 text-sm text-red-500">Please fix the errors above.</p>}
-        <button type="submit" className="w-full rounded-md bg-black py-2 font-semibold text-white">
+        <button type="submit" className="w-full mb-4 md:mb-0 rounded-md bg-black py-4 font-semibold text-white">
           Pay Now
         </button>
       </form>
