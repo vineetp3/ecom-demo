@@ -42,7 +42,7 @@ const PaymentMethods = () => {
         </div>
       </div>
 
-      <div className="mb-4 mt-4 flex items-center">
+      <div className="mb-2 mt-4 flex items-center">
         <input type="checkbox" id="sameAddress" className="mr-2" checked />
         <label htmlFor="sameAddress" className="text-sm">
           Use shipping address as billing address

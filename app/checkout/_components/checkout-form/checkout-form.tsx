@@ -8,7 +8,6 @@ import PaymentMethods from './_components/payment-methods';
 import RedirectDialog from './_components/redirect-dialog';
 import { states } from './constants';
 
-
 interface FormData {
   emailOrPhone: string;
   emailOffers: boolean;
@@ -274,20 +273,17 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
           />
         </div>
 
-        <div className="mb-4 flex flex-col gap-4">
+        <div className="mb-2 flex flex-col gap-4">
           <label className="block text-2xl font-bold text-gray-700">Payment</label>
           <p className="text-sm font-light text-gray-500">
             All transactions are secure and encrypted.
           </p>
           <PaymentMethods />
         </div>
-
+        {isError && <p className="mb-2 text-sm text-red-500">Please fix the errors above.</p>}
         <button type="submit" className="w-full rounded-md bg-black py-2 font-semibold text-white">
           Pay Now
         </button>
-        {isError && (
-          <p className="my-4 text-sm text-red-500">Please fix the errors above.</p>
-        )}
       </form>
       <RedirectDialog open={open} setOpen={setOpen} redirectUrl={redirectUrl} />
     </>
