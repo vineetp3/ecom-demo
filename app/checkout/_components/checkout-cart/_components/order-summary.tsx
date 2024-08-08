@@ -1,12 +1,17 @@
 'use client';
 
 import { Cart } from 'lib/shopify/types';
+import { Jost } from 'next/font/google';
+import Image from 'next/image';
 
-export default  function OrderSummary({cart} : {cart : Cart | undefined}) {
+const jost = Jost({
+  subsets: ['latin']
+});
 
+export default function OrderSummary({ cart }: { cart: Cart | undefined }) {
   return (
     <div className="mt-2 w-full">
-      <div className="space-y-1 text-sm px-4 md:p-0">
+      <div className="space-y-1 px-4 text-sm md:p-0">
         <div className="flex justify-between">
           <span className="text-gray-600">Subtotal</span>
           <span className="font-medium">{`$${cart?.cost.subtotalAmount.amount}0`}</span>
@@ -36,13 +41,26 @@ export default  function OrderSummary({cart} : {cart : Cart | undefined}) {
           <span className="font-medium">{`$${cart?.cost.totalTaxAmount.amount}0`}</span>
         </div>
       </div>
-      <div className="mt-4 border-t border-gray-200 pt-2 px-4 md:p-0">
-        <div className="flex items-center justify-between">
+      <div
+        className={`my-1 inline-flex w-full flex-wrap items-center rounded py-2 text-base ${jost.className}`}
+      >
+        <span className="mr-1 font-bold">Get offers</span>
+        <span>by paying with</span>
+        <Image
+          src="/persona.png"
+          height={30}
+          width={100}
+          alt="persona-icon"
+          className="mx-[6px] pb-[2px]"
+        />
+      </div>
+      <div className="border-t border-gray-200 px-4 pt-2 md:p-0">
+        <div className="mt-2 flex items-center justify-between">
           <span className="font-semibold">Total</span>
           <span className="font-medium">{`$${cart?.cost.totalAmount.amount}0`}</span>
         </div>
       </div>
-      <div className="mt-2 text-sm text-gray-500  px-4 md:p-0">{`Including $${cart?.cost.totalTaxAmount.amount}0 in taxes`}</div>
+      <div className="mt-2 px-4 text-sm  text-gray-500 md:p-0">{`Including $${cart?.cost.totalTaxAmount.amount}0 in taxes`}</div>
     </div>
   );
 }

@@ -1,22 +1,13 @@
 'use client';
 
 import { Cart } from 'lib/shopify/types';
-import { Jost } from 'next/font/google';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import Gpay from 'public/gpay.png';
-import PaypalExpress from 'public/paypalExp.png';
-import ShopPay from 'public/shopPayLogo.png';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import PaymentMethods from './_components/payment-methods';
 import RedirectDialog from './_components/redirect-dialog';
 import { states } from './constants';
-import styles from './styles.module.css';
 
-const jost = Jost({
-  subsets: ['latin']
-});
 
 interface FormData {
   emailOrPhone: string;
@@ -104,7 +95,7 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
   return (
     <>
       <form onSubmit={handleSubmit} className="w-full rounded-md md:p-4 md:pb-8">
-        <div className="flex flex-col gap-0">
+        {/* <div className="flex flex-col gap-0">
           <span className={`${styles.expressCheckout} text-sm`}>Express Checkout</span>
           <div className="flex gap-3 rounded-b-[5px] border border-t-0 px-4 py-4 flex-col md:flex-row">
             <div className="flex py-4 w-full md:w-1/3 items-center justify-center rounded-[5px] bg-[#5A31F4]">
@@ -130,7 +121,7 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
               className="mx-[6px] pb-[2px]"
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="my-4 flex flex-col gap-2">
           <label className="block text-2xl font-semibold text-gray-900">Contact</label>
