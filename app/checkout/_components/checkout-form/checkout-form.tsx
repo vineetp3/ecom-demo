@@ -1,12 +1,18 @@
 'use client';
 
 import { Cart } from 'lib/shopify/types';
+import { Jost } from 'next/font/google';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import PaymentMethods from './_components/payment-methods';
 import RedirectDialog from './_components/redirect-dialog';
 import { states } from './constants';
+
+const jost = Jost({
+  subsets: ['latin']
+});
 
 interface FormData {
   emailOrPhone: string;
@@ -58,7 +64,7 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
     });
     setValidationErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: "",
+      [name]: ''
     }));
   };
 
@@ -91,6 +97,19 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
   return (
     <>
       <form onSubmit={handleSubmit} className="w-full rounded-md md:p-4 md:pb-8">
+        <div
+          className={`sticky top-0 inline-flex w-full flex-wrap items-center rounded bg-[#F0F0F6] px-4 py-2 text-base shadow ${jost.className}`}
+        >
+          <span className="mr-1 font-bold">Get offers</span>
+          <span>by paying with</span>
+          <Image
+            src="/persona.png"
+            height={30}
+            width={100}
+            alt="persona-icon"
+            className="mx-[6px] pb-[2px]"
+          />
+        </div>
         <div className="my-4 flex flex-col gap-2">
           <label className="block text-2xl font-semibold text-gray-900">Contact</label>
           <input
@@ -176,8 +195,8 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
             onChange={handleChange}
             className="block h-12 w-full rounded-md border border-gray-300 bg-white px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
-          <div className="flex justify-between w-full gap-4 items-start">
-            <div className="outline-none flex-grow">
+          <div className="flex w-full items-start justify-between gap-4">
+            <div className="flex-grow outline-none">
               <input
                 type="text"
                 name="city"
@@ -190,7 +209,7 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
                 <p className="col-span-2 mt-1 text-sm text-red-500">{validationErrors.city}</p>
               )}
             </div>
-            <div className="flex items-center gap-4 flex-grow">
+            <div className="flex flex-grow items-center gap-4">
               <label className="block text-sm font-medium text-gray-700">State</label>
               <select
                 name="state"

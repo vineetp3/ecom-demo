@@ -11,7 +11,6 @@ import { Image as ImageType } from 'lib/shopify/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import OfferInfo from './_components/offer-info';
 
 export async function generateMetadata({
   params
@@ -100,10 +99,10 @@ export default async function ProductPage({ params }: { params: { handle: string
 
           <div className="basis-full lg:basis-2/6">
             <ProductDescription product={product} />
-            <div className="mt-4 flex items-center gap-2 rounded-full border border-red-600 p-2 px-4">
-              Get offers from
+            <div className="mt-1 flex flex-wrap items-center gap-2 rounded-full px-2 py-1">
+              Get offers by paying with
               <Image src="/persona.png" height={40} width={100} alt="persona-icon" />
-              <OfferInfo />
+              {/* <OfferInfo /> */}
             </div>
           </div>
         </div>
