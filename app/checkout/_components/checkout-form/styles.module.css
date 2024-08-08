@@ -1,0 +1,32 @@
+.expressCheckout::before {
+  border-right: 0 !important;
+  border-top-left-radius: 5px;
+  margin-right: 1em;
+}
+.expressCheckout::after {
+  border-left: 0 !important;
+  border-top-right-radius: 5px;
+  margin-left: 1em;
+}
+
+.expressCheckout::before,
+.expressCheckout::after {
+  content: '';
+  border: 1px #e6e6e6 solid;
+  border-bottom: 0;
+  height: 0.5em;
+  -webkit-box-flex: 1;
+  flex: 1 0 2em;
+}
+
+.expressCheckout {
+  color: #333333;
+  margin: 0;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: end;
+  align-items: flex-end;
+  text-align: center;
+}

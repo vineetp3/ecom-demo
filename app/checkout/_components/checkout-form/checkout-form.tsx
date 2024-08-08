@@ -4,11 +4,15 @@ import { Cart } from 'lib/shopify/types';
 import { Jost } from 'next/font/google';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import Gpay from 'public/gpay.png';
+import PaypalExpress from 'public/paypalExp.png';
+import ShopPay from 'public/shopPayLogo.png';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import PaymentMethods from './_components/payment-methods';
 import RedirectDialog from './_components/redirect-dialog';
 import { states } from './constants';
+import styles from './styles.module.css';
 
 const jost = Jost({
   subsets: ['latin']
@@ -52,6 +56,7 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
     saveInfo: false
   });
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const [isError, setIsError] = useState(false);
   const [open, setOpen] = useState(false);
   const [redirectUrl, setRedirectUrl] = useState('/');
 
@@ -66,6 +71,7 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
       ...prevErrors,
       [name]: ''
     }));
+    setIsError(false);
   };
 
   const handleSubmit = async (event: any) => {
@@ -90,6 +96,7 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
           return acc;
         }, {});
         setValidationErrors(errors);
+        setIsError(true);
       }
     }
   };
@@ -97,19 +104,34 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
   return (
     <>
       <form onSubmit={handleSubmit} className="w-full rounded-md md:p-4 md:pb-8">
-        <div
-          className={`sticky top-0 inline-flex w-full flex-wrap items-center rounded bg-[#F0F0F6] px-4 py-2 text-base shadow ${jost.className}`}
-        >
-          <span className="mr-1 font-bold">Get offers</span>
-          <span>by paying with</span>
-          <Image
-            src="/persona.png"
-            height={30}
-            width={100}
-            alt="persona-icon"
-            className="mx-[6px] pb-[2px]"
-          />
+        <div className="flex flex-col gap-0">
+          <span className={`${styles.expressCheckout} text-sm`}>Express Checkout</span>
+          <div className="flex gap-3 rounded-b-[5px] border border-t-0 px-4 py-4 flex-col md:flex-row">
+            <div className="flex py-4 w-full md:w-1/3 items-center justify-center rounded-[5px] bg-[#5A31F4]">
+              <Image src={ShopPay} alt="express-icons" className="w-[80px] h-[20px]"></Image>
+            </div>
+            <div className="flex py-4 w-full md:w-1/3  items-center justify-center rounded-[5px] bg-[#000000]">
+              <Image src={Gpay} alt="express-icons" className="w-[50px] h-[20px] "></Image>
+            </div>
+            <div className="flex py-4 w-full md:w-1/3  items-center justify-center rounded-[5px] bg-[#FFC439]">
+              <Image src={PaypalExpress} alt="express-icons" className="w-[70px] h-[20px]"></Image>
+            </div>
+          </div>
+          <div
+            className={`mt-4 inline-flex w-full flex-wrap items-center rounded bg-[#F0F0F6] px-4 py-2 text-base shadow ${jost.className}`}
+          >
+            <span className="mr-1 font-bold">Get offers</span>
+            <span>by paying with</span>
+            <Image
+              src="/persona.png"
+              height={30}
+              width={100}
+              alt="persona-icon"
+              className="mx-[6px] pb-[2px]"
+            />
+          </div>
         </div>
+
         <div className="my-4 flex flex-col gap-2">
           <label className="block text-2xl font-semibold text-gray-900">Contact</label>
           <input
@@ -272,6 +294,9 @@ const CheckoutForm = ({ cart }: { cart: Cart }) => {
         <button type="submit" className="w-full rounded-md bg-black py-2 font-semibold text-white">
           Pay Now
         </button>
+        {isError && (
+          <p className="my-4 text-sm text-red-500">Please fix the errors above.</p>
+        )}
       </form>
       <RedirectDialog open={open} setOpen={setOpen} redirectUrl={redirectUrl} />
     </>

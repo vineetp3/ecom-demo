@@ -17,7 +17,7 @@ const Checkout = async () => {
     cart = await getCart(cartId);
   }
   return (
-    <div className={`flex flex-col md:flex-row h-full px-2 py-8 md:py-0 md:px-[10%] ${soraFont.className}`}>
+    <div className={`flex flex-col md:flex-row h-full px-3 py-6 md:py-0 md:px-[10%] ${soraFont.className}`}>
       <div
         className={`h-[calc(100vh-7rem)] basis-1/2 overflow-scroll dark:border-neutral-500 ${styles.noScrollbar}`}
       >
