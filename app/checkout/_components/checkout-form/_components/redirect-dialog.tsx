@@ -16,11 +16,6 @@ const RedirectingDialog = ({
   // eslint-disable-next-line no-unused-vars
   setOpen: (arg: boolean) => void;
 }) => {
-  // const router = useRouter();
-  // const onClickSignUp = () => {
-  //   // sessionStorage.setItem("offer", JSON.stringify(partnerData));
-  //   router.push('/demo/payment');
-  // };
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
