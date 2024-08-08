@@ -42,7 +42,7 @@ export default function OrderSummary({ cart }: { cart: Cart | undefined }) {
         </div>
       </div>
       <div
-        className={`my-1 inline-flex w-full flex-wrap items-center rounded py-2 text-base ${jost.className}`}
+        className={`my-1 inline-flex w-full flex-wrap items-center rounded py-2 px-4 md:px-0 text-base ${jost.className}`}
       >
         <span className="mr-1 font-bold">Get offers</span>
         <span>by paying with</span>
